@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionsController < Devise::SessionsController
   respond_to :json
 
@@ -8,7 +10,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def respond_with(resource, _opts = {})
-    render json: resource.as_json.merge(token: current_token, expiration_date: DateTime.now + 1.day)
+    render json: resource.as_json.merge(token: current_token)
   end
 
   def respond_to_on_destroy

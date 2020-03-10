@@ -16,6 +16,9 @@ gem 'faker', '~> 2.10.2'
 gem 'devise', '~> 4.7.1'
 gem 'devise-jwt'
 gem 'dry-configurable', '0.9.0'
+gem 'carrierwave', '~> 2.0'
+gem 'mini_magick'
+gem 'fog-aws'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

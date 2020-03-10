@@ -2,10 +2,12 @@
 
 Rails.application.routes.draw do
   scope :api do
+    resources :providers, on: :collection
+
     devise_for :users,
                path: '',
                path_names: {
-                 sign_in: 'login',
+                 sign_in: 'sessions',
                  sign_out: 'logout'
                },
                controllers: {
