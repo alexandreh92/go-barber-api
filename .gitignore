@@ -29,3 +29,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+#ERD pdf
+erd.pdf
+
+#Rails public folder(react generates it automatically)
+/public
