@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["client/src/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "public",
+    "**/public/*",
+    "lib",
+    "**/lib/*",
+    "bin",
+    "**/bin/*",
+    "config",
+    "**/config/*",
+    "vendor",
+    "**/vendor/*",
+    "tmp",
+    "**/tmp/*",
+    "test",
+    "**/test/*",
+    "storage",
+    "**/storage/*"
+  ]
+}
