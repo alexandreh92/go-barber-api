@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :providers, on: :collection
     resources :appointments, on: :collection
     resources :schedule, on: :collection
+    resources :notifications, on: :collection
 
     devise_for :users,
                path: '',
