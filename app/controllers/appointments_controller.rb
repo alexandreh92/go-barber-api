@@ -6,7 +6,7 @@ class AppointmentsController < ApplicationController
   def index
     @appointments = Appointment.where(user_id: current_user.id, cancelled_at: nil).paginate(page: params[:page], per_page: 10)
 
-    render json: { appointments: @appointments.as_json(include: :user), current_page: @appointments.current_page, total_pages: @appointments.total_pages }
+    render json: { appointments: @appointments.as_json(include: :user, methods: %i[cancellable past]), current_page: @appointments.current_page, total_pages: @appointments.total_pages }
   end
 
   def create
@@ -49,6 +49,7 @@ class AppointmentsController < ApplicationController
     end
 
     if @appointment.update(cancelled_at: DateTime.now)
+      BarberMailer.new_cancellation(@appointment).deliver_later
       render json: @appointment
     else
       render json: { errors: @appointment.errors.full_messages }, status: 422

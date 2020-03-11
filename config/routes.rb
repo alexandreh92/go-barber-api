@@ -2,7 +2,9 @@
 
 Rails.application.routes.draw do
   scope :api do
-    resources :providers, on: :collection
+    resources :providers, on: :collection do
+      get :availables
+    end
     resources :appointments, on: :collection
     resources :schedule, on: :collection
     resources :notifications, on: :collection
