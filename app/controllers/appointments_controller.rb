@@ -3,7 +3,11 @@
 class AppointmentsController < ApplicationController
   before_action :authenticate_user!
 
-  def index; end
+  def index
+    @appointments = Appointment.where(user_id: current_user.id, cancelled_at: nil).paginate(page: params[:page], per_page: 10)
+
+    render json: { appointments: @appointments.as_json(include: :user), current_page: @appointments.current_page, total_pages: @appointments.total_pages }
+  end
 
   def create
     provider = User.where(id: appointment_params[:provider_id], provider: true)

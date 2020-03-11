@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   scope :api do
     resources :providers, on: :collection
     resources :appointments, on: :collection
+    resources :schedule, on: :collection
 
     devise_for :users,
                path: '',
