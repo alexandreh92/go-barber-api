@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
-export default createGlobalStyle`
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+export default createGlobalStyle`
 
 * {
   margin: 0;

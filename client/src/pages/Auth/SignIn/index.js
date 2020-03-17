@@ -1,9 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
 import logo from '~/assets/logo.svg';
+
+import AuthActions from '~/store/ducks/auth';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -13,8 +16,11 @@ const schema = Yup.object().shape({
 });
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+  const { signInRequest } = AuthActions;
+
   function handleSubmit({ email, password }) {
-    console.log(email, password);
+    dispatch(signInRequest(email, password));
   }
 
   return (
@@ -30,6 +36,7 @@ export default function SignIn() {
         />
 
         <button type="submit">Acessar</button>
+
         <Link to="/register">Criar conta gratuita</Link>
       </Form>
     </>

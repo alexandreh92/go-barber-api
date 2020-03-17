@@ -10,7 +10,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def respond_with(resource, _opts = {})
-    render json: resource.as_json.merge(token: current_token)
+    render json: { user: resource.as_json, token: current_token }
   end
 
   def respond_to_on_destroy

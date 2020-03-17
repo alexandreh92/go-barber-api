@@ -1,25 +1,26 @@
 import axios from 'axios';
 
-// import store from '~/store';
+import { store } from '~/store';
 
 const api = axios.create({
   baseURL: '/api',
 });
 
 // INTERCEPTOR FOR AUTH
-// api.interceptors.request.use(
-//   function(config) {
-//     const { token } = store.getState().auth;
+api.interceptors.request.use(
+  function(config) {
+    const { token } = store.getState().auth;
+    console.tron.log(token);
 
-//     if (token != null) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
+    if (token != null) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
-//     return config;
-//   },
-//   function(err) {
-//     return Promise.reject(err);
-//   }
-// );
+    return config;
+  },
+  function(err) {
+    return Promise.reject(err);
+  }
+);
 
 export default api;
