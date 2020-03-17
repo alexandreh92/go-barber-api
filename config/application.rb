@@ -24,6 +24,10 @@ module GoBarberWebRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    config.middleware.delete ActionDispatch::Cookies
+    config.middleware.delete ActionDispatch::Session::CookieStore
+
+
     Raven.configure do |config|
       config.dsn = 'https://d4c1a1f52ea348a4a344bf6e922779f9:75c983e849af410eb087cfe4647300cf@sentry.io/4413840'
     end

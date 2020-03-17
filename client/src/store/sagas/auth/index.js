@@ -8,6 +8,7 @@ import api from '~/services/api';
 import AuthActions from '~/store/ducks/auth';
 
 export function* signIn({ email, password }) {
+  yield put(AuthActions.setLoading());
   try {
     const response = yield call(api.post, 'sessions', {
       user: { email, password },
@@ -24,6 +25,7 @@ export function* signIn({ email, password }) {
 
     history.push('/');
   } catch (error) {
+    console.log(error);
     yield put(
       toastrActions.add({
         type: 'error',
@@ -31,6 +33,7 @@ export function* signIn({ email, password }) {
         message: 'Verifique seu e-mail/senha!',
       })
     );
+    yield put(AuthActions.setLoading());
   }
 }
 

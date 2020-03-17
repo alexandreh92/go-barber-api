@@ -20,10 +20,17 @@ export const INITIAL_STATE = Immutable({
 
 /* Reducers */
 
-export const success = (state, { user }) => state.merge({ profile: user });
+export const success = (state, { user }) => ({
+  ...state,
+  profile: user,
+  loading: false,
+});
+
+export const logout = state => INITIAL_STATE;
 
 /* Reducers to types */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.SIGN_IN_SUCCESS]: success,
+  [AuthTypes.SIGN_OUT]: logout,
 });

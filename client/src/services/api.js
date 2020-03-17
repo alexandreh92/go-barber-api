@@ -10,9 +10,8 @@ const api = axios.create({
 api.interceptors.request.use(
   function(config) {
     const { token } = store.getState().auth;
-    console.tron.log(token);
 
-    if (token != null) {
+    if (token !== null) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
