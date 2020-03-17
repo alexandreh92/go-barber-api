@@ -17,6 +17,7 @@ export default createGlobalStyle`
 
 html, body, #root {
   height: 100%;
+  font: 14px 'Roboto', sans-serif;
 }
 
 body {
