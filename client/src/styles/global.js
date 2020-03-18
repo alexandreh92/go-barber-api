@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 export default createGlobalStyle`
 

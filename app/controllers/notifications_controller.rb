@@ -2,7 +2,7 @@
 
 class NotificationsController < ApplicationController
   def index
-    @notifications = Notification.where(provider_id: 40).order(created_at: :desc)
+    @notifications = Notification.where(provider_id: current_user.id).order(created_at: :desc)
     render json: @notifications
   end
 
