@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects';
-import { actions as toastrActions } from 'react-redux-toastr';
+import { toastr } from 'react-redux-toastr';
 
 import history from '~/services/history';
 
@@ -17,7 +17,11 @@ export function* signIn({ email, password }) {
     const { user, token } = response.data;
 
     if (!user.provider) {
-      console.tron.error('Usuario nao eh prestador');
+      toastr.error(
+        'Falha no login',
+        'Somente prestadores podem acessar o painel de controle.'
+      );
+      yield put(AuthActions.setLoading());
       return;
     }
 
@@ -25,14 +29,7 @@ export function* signIn({ email, password }) {
 
     history.push('/');
   } catch (error) {
-    console.log(error);
-    yield put(
-      toastrActions.add({
-        type: 'error',
-        title: 'Falha no login',
-        message: 'Verifique seu e-mail/senha!',
-      })
-    );
+    toastr.error('Falha no login', 'Verifique seu e-mail/senha!');
     yield put(AuthActions.setLoading());
   }
 }

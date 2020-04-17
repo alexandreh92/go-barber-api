@@ -65,7 +65,7 @@ export default function Notifications() {
       <NotificationList visible={visible}>
         <Scroll>
           {notifications.map(notification => (
-            <Notification unread={!notification.read}>
+            <Notification key={notification.id} unread={!notification.read}>
               <p>Voce possui um novo agendamento para amannha</p>
               <time>ha 2 dias</time>
               {!notification.read && (

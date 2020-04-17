@@ -13,4 +13,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
+
+  def update_resource(user_params)
+    if user_params[:current_password]
+      update_with_password(user_params)
+    else
+      update(user_params)
+    end
+  end
 end

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :appointments, on: :collection
     resources :schedule, on: :collection
     resources :notifications, on: :collection
+    put '/profile', to: 'profile#update'
 
     devise_for :users,
                path: '',
