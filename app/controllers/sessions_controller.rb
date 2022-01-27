@@ -11,28 +11,25 @@ class SessionsController < Devise::SessionsController
     else
       render json: {
         message: 'Invalid credentials'
-      }, status: :not_authorized
+      }, status: :unauthorized
     end
   end
 
-
   private
 
-  def current_token
-    request.env['warden-jwt_auth.token']
-  end
+    def current_token
+      request.env['warden-jwt_auth.token']
+    end
 
-  def respond_with(resource, _opts = {})
-    render json: { user: resource.as_json, token: current_token }
-  end
+    def respond_with(resource, _opts = {})
+      render json: { user: resource.as_json, token: current_token }
+    end
 
-  def respond_to_on_destroy
-    head :no_content
-  end
+    def respond_to_on_destroy
+      head :no_content
+    end
 
-  private
-
-  def session_params
-    params.permit(:email, :password)
-  end
+    def session_params
+      params.permit(:email, :password)
+    end
 end
