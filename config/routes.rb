@@ -17,9 +17,11 @@ Rails.application.routes.draw do
                  sign_out: 'logout'
                },
                controllers: {
-                 sessions: 'sessions',
-                 registrations: 'registrations'
+                 sessions: 'sessions'
                }
+    devise_scope :user do
+      post '/registrations', to: 'registrations#create'
+    end
   end
 
   get '*path', to: 'application#fallback_index_html', constraints: lambda { |request|

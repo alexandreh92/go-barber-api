@@ -4,9 +4,11 @@ class AppointmentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @appointments = Appointment.where(user_id: current_user.id, cancelled_at: nil).paginate(page: params[:page], per_page: 10)
+    @appointments = Appointment.where(user_id: current_user.id, cancelled_at: nil).paginate(page: params[:page],
+                                                                                            per_page: 10)
 
-    render json: { appointments: @appointments.as_json(include: :user, methods: %i[cancellable past]), current_page: @appointments.current_page, total_pages: @appointments.total_pages }
+    render json: { appointments: @appointments.as_json(include: :user, methods: %i[cancellable past]),
+                   current_page: @appointments.current_page, total_pages: @appointments.total_pages }
   end
 
   def create
@@ -19,13 +21,9 @@ class AppointmentsController < ApplicationController
       return render json: { error: 'You can only create appointments with providers' }, status: 401
     end
 
-    if parsed_date < DateTime.now
-      return render json: { error: 'Past dates are not permitted.' }, status: 401
-    end
+    return render json: { error: 'Past dates are not permitted.' }, status: 401 if parsed_date < DateTime.now
 
-    if check_availability.exists?
-      return render json: { erorr: 'Appointment date is not available.' }, status: 401
-    end
+    return render json: { erorr: 'Appointment date is not available.' }, status: 401 if check_availability.exists?
 
     @appointment = Appointment.new(appointment_params.merge(user_id: current_user.id))
     if @appointment.save
@@ -59,6 +57,6 @@ class AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.require(:appointment).permit(:provider_id, :date)
+    params.permit(:provider_id, :date)
   end
 end

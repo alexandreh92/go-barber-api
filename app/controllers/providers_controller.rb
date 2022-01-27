@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProvidersController < ApplicationController
+  before_action :authenticate_user!
+
   attr_accessor :date
 
   def index
@@ -11,7 +13,8 @@ class ProvidersController < ApplicationController
 
   def availables
     date = DateTime.parse(provider_params[:date])
-    @appointments = Appointment.where(provider_id: params[:provider_id], cancelled_at: nil, date: date.beginning_of_day..date.end_of_day)
+    @appointments = Appointment.where(provider_id: params[:provider_id], cancelled_at: nil,
+                                      date: date.beginning_of_day..date.end_of_day)
 
     schedule = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
 
@@ -33,6 +36,6 @@ class ProvidersController < ApplicationController
   private
 
   def provider_params
-    params.require(:provider).permit(:date)
+    params.permit(:date)
   end
 end
