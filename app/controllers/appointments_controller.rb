@@ -18,12 +18,19 @@ class AppointmentsController < ApplicationController
                                            cancelled_at: nil, date: parsed_date)
 
     unless provider.exists?
-      return render json: { error: 'You can only create appointments with providers' }, status: 401
+      return render json: { error: 'You can only create appointments with providers' },
+                    status: 401
     end
 
-    return render json: { error: 'Past dates are not permitted.' }, status: 401 if parsed_date < DateTime.now
+    if parsed_date < DateTime.now
+      return render json: { error: 'Past dates are not permitted.' },
+                    status: 401
+    end
 
-    return render json: { erorr: 'Appointment date is not available.' }, status: 401 if check_availability.exists?
+    if check_availability.exists?
+      return render json: { erorr: 'Appointment date is not available.' },
+                    status: 401
+    end
 
     @appointment = Appointment.new(appointment_params.merge(user_id: current_user.id))
     if @appointment.save
@@ -39,11 +46,13 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.find(params[:id])
 
     if @appointment.user_id != current_user.id
-      return render json: { erorr: "You don't have permission to cancel this appointment." }, status: 401
+      return render json: { erorr: "You don't have permission to cancel this appointment." },
+                    status: 401
     end
 
     if @appointment.date - 2.hours < DateTime.now
-      return render json: { erorr: 'You can only cancel appointments 2 hours in advance.' }, status: 401
+      return render json: { erorr: 'You can only cancel appointments 2 hours in advance.' },
+                    status: 401
     end
 
     if @appointment.update(cancelled_at: DateTime.now)
@@ -56,7 +65,7 @@ class AppointmentsController < ApplicationController
 
   private
 
-  def appointment_params
-    params.permit(:provider_id, :date)
-  end
+    def appointment_params
+      params.permit(:provider_id, :date)
+    end
 end

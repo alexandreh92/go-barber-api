@@ -1,0 +1,76 @@
+AllCops:
+  Exclude:
+    - "config/**/*"
+    - "libs/**/*"
+  TargetRubyVersion: 2.6
+
+# Layout
+Layout/LineLength:
+  AutoCorrect: true
+  Max: 90
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+Layout/IndentationConsistency:
+  Enabled: true
+  AutoCorrect: true
+  EnforcedStyle: indented_internal_methods
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+  AutoCorrect: true
+
+# Lint
+Lint/RaiseException:
+  Enabled: false
+Lint/StructNewOverride:
+  Enabled: false
+Lint/Debugger:
+  Enabled: true
+  Severity: error
+
+# Metrics
+Metrics/ClassLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+
+# Style
+Style/Documentation:
+  Enabled: false
+Style/HashEachMethods:
+  Enabled: false
+Style/HashTransformKeys:
+  Enabled: false
+Style/HashTransformValues:
+  Enabled: false
+Style/ExponentialNotation:
+  Enabled: true
+Style/ClassAndModuleChildren:
+  AutoCorrect: true
+  EnforcedStyle: nested
+Style/ClassMethods:
+  AutoCorrect: true
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+Style/TrivialAccessors:
+  ExactNameMatch: false
+  Enabled: false
+Style/RedundantFreeze:
+  Enabled: true
+  AutoCorrect: true
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+  AutoCorrect: true
+Style/RedundantRegexpEscape:
+  Enabled: true
+  AutoCorrect: true
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+  AutoCorrect: true
+Style/HashLikeCase:
+  MinBranchesCount: 4
+Style/SingleArgumentDig:
+  Enabled: false
