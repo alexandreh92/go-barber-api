@@ -18,6 +18,7 @@ gem 'devise-jwt'
 gem 'dry-configurable', '0.9.0'
 gem 'carrierwave', '~> 2.0'
 gem 'mini_magick'
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 gem 'fog-aws'
 gem 'will_paginate', '~> 3.1.0'
 gem "slim-rails"
