@@ -51,13 +51,13 @@ module Api
       @appointment = Appointment.find(params[:id])
 
       if @appointment.user_id != current_user.id
-        return render json: { erorr: "You don't have permission to cancel this appointment." },
+        return render json: { error: "You don't have permission to cancel this appointment." },
                       status: 401
       end
 
       if @appointment.date - 2.hours < DateTime.now
-        return render json: { erorr: 'You can only cancel appointments 2 hours in advance.' },
-                      status: 401
+        return render json: { error: 'You can only cancel appointments 2 hours in advance.' },
+                      status: 403
       end
 
       if @appointment.update(cancelled_at: DateTime.now)

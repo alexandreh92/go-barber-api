@@ -67,3 +67,23 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/new_appointment"
+  "/api/appointments/{id}":
+    delete:
+      summary: Delete an appointment
+      tags:
+      - Appointments
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden

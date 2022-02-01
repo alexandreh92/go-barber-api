@@ -142,4 +142,108 @@ RSpec.describe 'api/appointments', type: :request do
       end
     end
   end
+
+  path '/api/appointments/{id}' do
+    describe 'DELETE#destroy' do
+      delete 'Delete an appointment' do
+        tags 'Appointments'
+        consumes 'application/json'
+        parameter name: :id, in: :path, type: :string
+        security [Bearer: []]
+
+        let!(:user) { create(:user) }
+        let!(:provider) { create(:user, :provider) }
+
+        context 'with success' do
+          response '200', 'successful' do
+            let(:Authorization) { auth_token_for(user) }
+            let(:id) { appointment.id }
+
+            let(:appointment) do
+              create(:appointment,
+                     user: user,
+                     provider: provider,
+                     date: DateTime.tomorrow)
+            end
+
+            run_test! do |response|
+              expect(JSON.parse(response.body)).to include_json(
+                {
+                  id: appointment.id,
+                  provider_id: provider.id,
+                  user_id: user.id
+                }
+              )
+            end
+          end
+        end
+
+        context 'with failure', travel: frozen_date do
+          response '401', 'unauthorized' do
+            let(:another_user) { create(:user) }
+            let(:Authorization) { 'no-token' }
+            let(:id) { appointment.id }
+
+            let(:appointment) do
+              create(:appointment,
+                     user: user,
+                     provider: provider,
+                     date: DateTime.tomorrow)
+            end
+
+            run_test! do |response|
+              expect(response.body).to eq(
+                'You need to sign in or sign up before continuing.'
+              )
+            end
+          end
+
+          context 'when user is not the appointments owner' do
+            response '401', 'unauthorized' do
+              let(:another_user) { create(:user) }
+              let(:Authorization) { auth_token_for(another_user) }
+              let(:id) { appointment.id }
+
+              let(:appointment) do
+                create(:appointment,
+                       user: user,
+                       provider: provider,
+                       date: DateTime.tomorrow)
+              end
+
+              run_test! do |response|
+                expect(JSON.parse(response.body)).to include_json(
+                  {
+                    error: "You don't have permission to cancel this appointment."
+                  }
+                )
+              end
+            end
+          end
+
+          context 'when cancellation time is less than 2 hours' do
+            response '403', 'forbidden' do
+              let(:Authorization) { auth_token_for(user) }
+              let(:id) { appointment.id }
+
+              let(:appointment) do
+                create(:appointment,
+                       user: user,
+                       provider: provider,
+                       date: DateTime.now + 1.hour)
+              end
+
+              run_test! do |response|
+                expect(JSON.parse(response.body)).to include_json(
+                  {
+                    error: 'You can only cancel appointments 2 hours in advance.'
+                  }
+                )
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end
