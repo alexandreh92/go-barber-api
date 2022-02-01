@@ -26,8 +26,12 @@ gem 'sentry-raven'
 gem 'slim-rails'
 gem 'will_paginate', '~> 3.1.0'
 gem 'rack-cors'
+gem 'rswag-api'
+gem 'rswag-ui'
 
 group :development, :test do
+  gem 'rswag-specs'
+  gem 'factory_bot_rails'
   gem 'better_errors'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-rails'
@@ -40,6 +44,16 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+end
+
+group :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'rspec-json_expectations'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner'
+  gem 'simplecov'
+  gem 'rails-controller-testing'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
