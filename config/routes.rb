@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :api do
+    resources :appointments, on: :collection, only: %i[index create destroy]
+  end
+
   scope :api do
     resources :providers, on: :collection do
       get :availables
     end
-    resources :appointments, on: :collection
     resources :schedule, on: :collection
     resources :notifications, on: :collection
     put '/profile', to: 'profile#update'
