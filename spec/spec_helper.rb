@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'pry'
@@ -5,6 +7,7 @@ require 'shoulda/matchers'
 require 'rspec/json_expectations'
 require 'rspec/rails'
 require 'simplecov'
+require 'factory_bot'
 
 # Simplecov
 SimpleCov.start 'rails' do
@@ -29,5 +32,6 @@ RSpec.configure do |config|
   config.raise_errors_for_deprecations!
   config.include Rails.application.routes.url_helpers
   config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Warden::Test::Helpers
+  config.include Warden::Test::Helpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end

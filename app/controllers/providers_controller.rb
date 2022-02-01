@@ -16,7 +16,8 @@ class ProvidersController < ApplicationController
     @appointments = Appointment.where(provider_id: params[:provider_id], cancelled_at: nil,
                                       date: date.beginning_of_day..date.end_of_day)
 
-    schedule = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00']
+    schedule = ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00',
+                '17:00', '18:00']
 
     availables = []
     schedule.each do |time|
@@ -26,7 +27,9 @@ class ProvidersController < ApplicationController
       availables << {
         time: time,
         value: value,
-        available: value > DateTime.now && @appointments.find_each.select { |a| a.date.strftime('%H:%M') == time }.none?
+        available: value > DateTime.now && @appointments.find_each.select do |a|
+                     a.date.strftime('%H:%M') == time
+                   end .none?
       }
     end
 
@@ -35,7 +38,7 @@ class ProvidersController < ApplicationController
 
   private
 
-  def provider_params
-    params.permit(:date)
-  end
+    def provider_params
+      params.permit(:date)
+    end
 end

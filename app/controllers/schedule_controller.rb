@@ -12,7 +12,7 @@ class ScheduleController < ApplicationController
 
   private
 
-  def schedule_params
-    params.permit(:date)
-  end
+    def schedule_params
+      params.permit(:date)
+    end
 end

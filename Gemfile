@@ -22,20 +22,20 @@ gem 'foreman', '~> 0.87'
 gem 'mimemagic'
 gem 'mini_magick'
 gem 'pg', '~> 1.2'
-gem 'sentry-raven'
-gem 'slim-rails'
-gem 'will_paginate', '~> 3.1.0'
 gem 'rack-cors'
 gem 'rswag-api'
 gem 'rswag-ui'
+gem 'sentry-raven'
+gem 'slim-rails'
+gem 'will_paginate', '~> 3.1.0'
 
 group :development, :test do
-  gem 'rswag-specs'
-  gem 'factory_bot_rails'
   gem 'better_errors'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'rails-erd'
+  gem 'rswag-specs'
   gem 'rubocop'
 end
 
@@ -47,13 +47,13 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'rspec-json_expectations'
-  gem 'shoulda-matchers'
   gem 'database_cleaner'
-  gem 'simplecov'
   gem 'rails-controller-testing'
+  gem 'rspec'
+  gem 'rspec-json_expectations'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
