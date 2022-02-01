@@ -1,5 +1,18 @@
 ---
 components:
+  schemas:
+    new_appointment:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        provider_id:
+          type: integer
+          example: 1
+      required:
+      - date
+      - provider_id
   securitySchemes:
     Bearer:
       description: JWT key necessary to use API calls
@@ -20,6 +33,8 @@ paths:
   "/api/appointments":
     get:
       summary: List all appointments
+      tags:
+      - Appointments
       parameters:
       - name: page
         in: query
@@ -33,3 +48,22 @@ paths:
           description: successful
         '401':
           description: unauthorized
+    post:
+      summary: Create an appointment
+      tags:
+      - Appointments
+      parameters: []
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+        '422':
+          description: rejected
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/new_appointment"

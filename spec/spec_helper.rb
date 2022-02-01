@@ -1,18 +1,13 @@
 # frozen_string_literal: true
 
 ENV['RAILS_ENV'] ||= 'test'
+require 'support/simplecov'
 require File.expand_path('../config/environment', __dir__)
 require 'pry'
 require 'shoulda/matchers'
 require 'rspec/json_expectations'
 require 'rspec/rails'
-require 'simplecov'
 require 'factory_bot'
-
-# Simplecov
-SimpleCov.start 'rails' do
-  puts 'required simplecov'
-end
 
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
@@ -31,7 +26,4 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.raise_errors_for_deprecations!
   config.include Rails.application.routes.url_helpers
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Warden::Test::Helpers, type: :request
-  config.include Devise::Test::IntegrationHelpers, type: :request
 end

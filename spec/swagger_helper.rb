@@ -18,6 +18,16 @@ RSpec.configure do |config|
   config.swagger_docs = {
     'v1/swagger.yaml' => {
       components: {
+        schemas: {
+          new_appointment: {
+            type: 'object',
+            properties: {
+              date: { type: 'string', format: 'date-time' },
+              provider_id: { type: 'integer', example: 1 }
+            },
+            required: %w[date provider_id]
+          }
+        },
         securitySchemes: {
           Bearer: {
             description: 'JWT key necessary to use API calls',

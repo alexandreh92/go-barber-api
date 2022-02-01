@@ -24,24 +24,24 @@ module Api
 
       unless provider.exists?
         return render json: { error: 'You can only create appointments with providers' },
-                      status: 401
+                      status: 422
       end
 
       if parsed_date < DateTime.now
         return render json: { error: 'Past dates are not permitted.' },
-                      status: 401
+                      status: 422
       end
 
       if check_availability.exists?
-        return render json: { erorr: 'Appointment date is not available.' },
-                      status: 401
+        return render json: { error: 'Appointment date is not available.' },
+                      status: 422
       end
 
       @appointment = Appointment.new(appointment_params.merge(user_id: current_user.id))
       if @appointment.save
         Notification.create!(user_id: current_user.id, provider_id: appointment_params[:provider_id],
                              content: "Novo agendamento de #{current_user.name} para o dia #{DateTime.now.strftime('%d de %B às %H:%Mh')}")
-        render json: @appointment
+        render json: @appointment, status: 201
       else
         render json: { errors: @appointment.errors.full_messages }, status: 422
       end

@@ -54,6 +54,7 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'simplecov'
+  gem 'timecop'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
