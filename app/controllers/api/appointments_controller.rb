@@ -17,34 +17,13 @@ module Api
     end
 
     def create
-      provider = User.where(id: appointment_params[:provider_id], provider: true)
-      parsed_date = Appointment.pastDate(appointment_params[:date])
-      check_availability = Appointment.where(provider_id: appointment_params[:provider_id],
-                                             cancelled_at: nil, date: parsed_date)
+      appointment = Appointments::CreateAppointmentService.call(
+        user_id: current_user.id,
+        provider_id: appointment_params[:provider_id],
+        date: appointment_params[:date]
+      )
 
-      unless provider.exists?
-        return render json: { error: 'You can only create appointments with providers' },
-                      status: 422
-      end
-
-      if parsed_date < DateTime.now
-        return render json: { error: 'Past dates are not permitted.' },
-                      status: 422
-      end
-
-      if check_availability.exists?
-        return render json: { error: 'Appointment date is not available.' },
-                      status: 422
-      end
-
-      @appointment = Appointment.new(appointment_params.merge(user_id: current_user.id))
-      if @appointment.save
-        Notification.create!(user_id: current_user.id, provider_id: appointment_params[:provider_id],
-                             content: "Novo agendamento de #{current_user.name} para o dia #{DateTime.now.strftime('%d de %B às %H:%Mh')}")
-        render json: @appointment, status: 201
-      else
-        render json: { errors: @appointment.errors.full_messages }, status: 422
-      end
+      render json: appointment, status: :created
     end
 
     def destroy

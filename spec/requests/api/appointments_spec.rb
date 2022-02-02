@@ -56,7 +56,7 @@ RSpec.describe 'api/appointments', type: :request do
         let!(:user) { create(:user) }
         let!(:provider) { create(:user, :provider) }
 
-        context 'with success' do
+        context 'with success', travel: frozen_date do
           response '201', 'created' do
             let(:Authorization) { auth_token_for(user) }
             let(:params) { { date: DateTime.tomorrow, provider_id: provider.id } }
@@ -132,7 +132,7 @@ RSpec.describe 'api/appointments', type: :request do
               run_test! do |response|
                 expect(JSON.parse(response.body)).to include_json(
                   {
-                    error: 'Appointment date is not available.'
+                    error: 'Appointment date is not available for schedule.'
                   }
                 )
               end
