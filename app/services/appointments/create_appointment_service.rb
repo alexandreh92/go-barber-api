@@ -20,7 +20,7 @@ module Appointments
       attr_reader :user, :provider_id, :date
 
       def validate
-        raise Exceptions::NotProviderException unless provider_exists?
+        raise Exceptions::NotProvider unless provider_exists?
         raise Exceptions::PastDatesNotAllowed if past_date?
         raise Exceptions::DateNotAvailable if date_unavailable?
       end
@@ -52,7 +52,8 @@ module Appointments
         Notification.create!(
           user_id: user.id,
           provider_id: provider_id,
-          content: "Novo agendamento de #{user.name} para o dia #{DateTime.now.strftime('%d de %B às %H:%Mh')}"
+          content: "Novo agendamento de #{user.name} para o dia" \
+          "#{DateTime.now.strftime('%d de %B às %H:%Mh')}"
         )
       end
   end

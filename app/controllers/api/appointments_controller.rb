@@ -27,24 +27,12 @@ module Api
     end
 
     def destroy
-      @appointment = Appointment.find(params[:id])
+      appointment = Appointments::DestroyAppointmentService.call(
+        user_id: current_user.id,
+        appointment_id: params[:id]
+      )
 
-      if @appointment.user_id != current_user.id
-        return render json: { error: "You don't have permission to cancel this appointment." },
-                      status: 401
-      end
-
-      if @appointment.date - 2.hours < DateTime.now
-        return render json: { error: 'You can only cancel appointments 2 hours in advance.' },
-                      status: 403
-      end
-
-      if @appointment.update(cancelled_at: DateTime.now)
-        BarberMailer.new_cancellation(@appointment).deliver_later
-        render json: @appointment
-      else
-        render json: { errors: @appointment.errors.full_messages }, status: 422
-      end
+      render json: appointment
     end
 
     private

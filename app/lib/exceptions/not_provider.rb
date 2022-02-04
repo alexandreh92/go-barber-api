@@ -1,5 +1,5 @@
 module Exceptions
-  class NotProviderException < GoBarberException
+  class NotProvider < GoBarberException
     def message
       'You can only create appointments with providers'
     end

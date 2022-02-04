@@ -87,7 +87,7 @@ RSpec.describe 'api/appointments', type: :request do
 
           context 'when provider_id is not a provider', travel: frozen_date do
             response '422', 'rejected' do
-              let!(:provider) { create(:user) }
+              let!(:provider) { create(:user, provider: false) }
               let(:Authorization) { auth_token_for(user) }
               let(:params) { { date: DateTime.tomorrow, provider_id: provider.id } }
 
@@ -154,7 +154,7 @@ RSpec.describe 'api/appointments', type: :request do
         let!(:user) { create(:user) }
         let!(:provider) { create(:user, :provider) }
 
-        context 'with success' do
+        context 'with success', travel: frozen_date do
           response '200', 'successful' do
             let(:Authorization) { auth_token_for(user) }
             let(:id) { appointment.id }
@@ -199,7 +199,7 @@ RSpec.describe 'api/appointments', type: :request do
           end
 
           context 'when user is not the appointments owner' do
-            response '401', 'unauthorized' do
+            response '403', 'forbidden' do
               let(:another_user) { create(:user) }
               let(:Authorization) { auth_token_for(another_user) }
               let(:id) { appointment.id }
@@ -222,7 +222,7 @@ RSpec.describe 'api/appointments', type: :request do
           end
 
           context 'when cancellation time is less than 2 hours' do
-            response '403', 'forbidden' do
+            response '422', 'unprocessable entity' do
               let(:Authorization) { auth_token_for(user) }
               let(:id) { appointment.id }
 
