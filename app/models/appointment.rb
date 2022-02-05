@@ -12,15 +12,12 @@ class Appointment < ApplicationRecord
   scope :not_cancelled, -> { where(cancelled_at: nil) }
 
   # Methods
-  def self.pastDate(date)
-    DateTime.parse(date).change(min: 0)
-  end
 
-  def cancellable
+  def cancellable?
     date > DateTime.now - 2.hours
   end
 
-  def past
+  def past?
     date < DateTime.now
   end
 end

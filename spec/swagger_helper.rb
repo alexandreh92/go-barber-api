@@ -26,6 +26,16 @@ RSpec.configure do |config|
               provider_id: { type: 'integer', example: 1 }
             },
             required: %w[date provider_id]
+          },
+          update_profile: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              password: { type: 'string' },
+              password_confirmation: { type: 'string' },
+              current_password: { type: 'string' },
+              avatar: { type: 'file' }
+            }
           }
         },
         securitySchemes: {

@@ -11,9 +11,11 @@ module Api
       def handle_exceptions
         yield
       rescue ActiveRecord::RecordNotFound => e
+        render json: { error: e }, status: :unauthorized
+      rescue ActiveRecord::RecordInvalid => e
         render json: { error: e }, status: :unprocessable_entity
       rescue Exceptions::GoBarberException => e
-        render json: { error: e.message }, status: e.http_code
+        render json: { error: e.message, error_code: e.error_code }, status: e.http_code
       rescue StandardError => e
         render json: { error: e }, status: :internal_server_error
       end

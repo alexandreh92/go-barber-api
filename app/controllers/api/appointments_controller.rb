@@ -9,7 +9,7 @@ module Api
 
       render json: {
         appointments: @appointments.as_json(
-          include: :user, methods: %i[cancellable past]
+          include: :user, methods: %i[cancellable? past?]
         ),
         current_page: @appointments.current_page,
         total_pages: @appointments.total_pages

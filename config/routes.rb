@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   namespace :api do
     resources :appointments, only: %i[index create destroy]
     resources :notifications, only: %i[index update]
+    resources :profile, only: [:none] do
+      put :update, on: :collection
+    end
   end
 
   scope :api do
@@ -14,7 +17,6 @@ Rails.application.routes.draw do
       get :availables
     end
     resources :schedule, on: :collection
-    put '/profile', to: 'profile#update'
 
     devise_for :users,
                path: '',

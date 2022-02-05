@@ -13,6 +13,19 @@ components:
       required:
       - date
       - provider_id
+    update_profile:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        password_confirmation:
+          type: string
+        current_password:
+          type: string
+        avatar:
+          type: file
   securitySchemes:
     Bearer:
       description: JWT key necessary to use API calls
@@ -119,3 +132,21 @@ paths:
           description: successful
         '401':
           description: unauthorized
+  "/api/profile":
+    put:
+      summary: Update profile
+      tags:
+      - Profile
+      parameters: []
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: string
