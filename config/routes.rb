@@ -3,8 +3,10 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
   namespace :api do
-    resources :appointments, on: :collection, only: %i[index create destroy]
+    resources :appointments, only: %i[index create destroy]
+    resources :notifications, only: %i[index update]
   end
 
   scope :api do
@@ -12,7 +14,6 @@ Rails.application.routes.draw do
       get :availables
     end
     resources :schedule, on: :collection
-    resources :notifications, on: :collection
     put '/profile', to: 'profile#update'
 
     devise_for :users,

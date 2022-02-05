@@ -12,11 +12,7 @@ module Api
         yield
       rescue ActiveRecord::RecordNotFound => e
         render json: { error: e }, status: :unprocessable_entity
-      rescue Exceptions::NotProvider,
-             Exceptions::PastDatesNotAllowed,
-             Exceptions::DateNotAvailable,
-             Exceptions::CancellationNotInRange,
-             Exceptions::Forbidden => e
+      rescue Exceptions::GoBarberException => e
         render json: { error: e.message }, status: e.http_code
       rescue StandardError => e
         render json: { error: e }, status: :internal_server_error

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Exceptions
   class GoBarberException < StandardError
     def message; end
