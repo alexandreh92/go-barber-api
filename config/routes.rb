@@ -1,30 +1,27 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
+
+  namespace :api do
+    resources :appointments, only: %i[index create destroy]
+    resources :notifications, only: %i[index update]
+    resources :profile, only: [:none] do
+      put :update, on: :collection
+    end
+    resources :schedule, only: [:index]
+  end
+
   scope :api do
     resources :providers, on: :collection do
       get :availables
     end
-    resources :appointments, on: :collection
-    resources :schedule, on: :collection
-    resources :notifications, on: :collection
-    put '/profile', to: 'profile#update'
 
-    devise_for :users,
-               path: '',
-               path_names: {
-                 sign_in: 'sessions',
-                 sign_out: 'logout'
-               },
-               controllers: {
-                 sessions: 'sessions'
-               }
-    devise_scope :user do
-      post '/registrations', to: 'registrations#create'
+    devise_for :users, skip: :all
+    as :user do
+      post :sessions, to: 'api/sessions#create', as: :user_session
+      post :registrations, to: 'api/registrations#create', as: :user_registration
     end
   end
-
-  get '*path', to: 'application#fallback_index_html', constraints: lambda { |request|
-    !request.xhr? && request.format.html?
-  }
 end

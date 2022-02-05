@@ -8,15 +8,16 @@ class Appointment < ApplicationRecord
   # Validations
   validates :date, presence: true
 
-  def self.pastDate(date)
-    DateTime.parse(date).change(min: 0)
-  end
+  # Scopes
+  scope :not_cancelled, -> { where(cancelled_at: nil) }
 
-  def cancellable
+  # Methods
+
+  def cancellable?
     date > DateTime.now - 2.hours
   end
 
-  def past
+  def past?
     date < DateTime.now
   end
 end

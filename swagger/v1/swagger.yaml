@@ -1,0 +1,235 @@
+---
+components:
+  schemas:
+    new_appointment:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        provider_id:
+          type: integer
+          example: 1
+      required:
+      - date
+      - provider_id
+    update_profile:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        password_confirmation:
+          type: string
+        current_password:
+          type: string
+        avatar:
+          type: file
+    user_session:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+        password:
+          type: string
+          required: true
+    user_registration:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+        password:
+          type: string
+          required: true
+        password_confirmation:
+          type: string
+          required: true
+        name:
+          type: string
+          required: true
+        provider:
+          type: boolean
+          required: true
+  securitySchemes:
+    Bearer:
+      description: JWT key necessary to use API calls
+      type: apiKey
+      name: Authorization
+      in: header
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+  description: This is the first version of my API
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
+paths:
+  "/api/appointments":
+    get:
+      summary: List all appointments
+      tags:
+      - Appointments
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+    post:
+      summary: Create an appointment
+      tags:
+      - Appointments
+      parameters: []
+      security:
+      - Bearer: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+        '422':
+          description: rejected
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/new_appointment"
+  "/api/appointments/{id}":
+    delete:
+      summary: Delete an appointment
+      tags:
+      - Appointments
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '422':
+          description: unprocessable entity
+  "/api/notifications":
+    get:
+      summary: List all notifications
+      tags:
+      - Notifications
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+  "/api/notifications/{id}":
+    put:
+      summary: Read notification
+      tags:
+      - Notifications
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+  "/api/profile":
+    put:
+      summary: Update profile
+      tags:
+      - Profile
+      parameters: []
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: unauthorized
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/update_profile"
+  "/api/registrations":
+    post:
+      summary: Creates an user
+      tags:
+      - Registration
+      parameters: []
+      responses:
+        '201':
+          description: created
+          headers:
+            Authorization:
+              type: string
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/user_registration"
+  "/api/schedule":
+    get:
+      summary: List all schedule given a day
+      tags:
+      - Schedule
+      security:
+      - Bearer: []
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+  "/api/sessions":
+    post:
+      summary: Creates a session
+      tags:
+      - Session
+      parameters: []
+      responses:
+        '201':
+          description: created
+          headers:
+            Authorization:
+              type: string
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/user_session"
