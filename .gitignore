@@ -34,7 +34,7 @@
 erd.pdf
 
 # Rails public folder(react generates it automatically)
-/public
+!/public/swagger
 
 # Coverage files
 /coverage
