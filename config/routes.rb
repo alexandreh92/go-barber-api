@@ -10,14 +10,13 @@ Rails.application.routes.draw do
     resources :profile, only: [:none] do
       put :update, on: :collection
     end
+    resources :providers, only: [:index] do
+      get :availables, on: :collection
+    end
     resources :schedule, only: [:index]
   end
 
   scope :api do
-    resources :providers, on: :collection do
-      get :availables
-    end
-
     devise_for :users, skip: :all
     as :user do
       post :sessions, to: 'api/sessions#create', as: :user_session

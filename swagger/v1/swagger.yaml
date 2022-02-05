@@ -1,4 +1,14 @@
 ---
+openapi: 3.0.1
+info:
+  title: GoBarber API V1
+  version: v1
+  description: This is the documentation for GoBarberAPI
+servers:
+- url: http://localhost:3000
+  description: Development server
+- url: ''
+  description: Production server (uses live data)
 components:
   schemas:
     new_appointment:
@@ -59,16 +69,6 @@ components:
       type: apiKey
       name: Authorization
       in: header
-openapi: 3.0.1
-info:
-  title: API V1
-  version: v1
-  description: This is the first version of my API
-servers:
-- url: http://{defaultHost}
-  variables:
-    defaultHost:
-      default: localhost:3000
 paths:
   "/api/appointments":
     get:
@@ -179,6 +179,37 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/update_profile"
+  "/api/providers":
+    get:
+      summary: List all providers
+      tags:
+      - Providers
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+  "/api/providers/availables":
+    get:
+      summary: List all available dates
+      tags:
+      - Providers
+      security:
+      - Bearer: []
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: provider_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
   "/api/registrations":
     post:
       summary: Creates an user

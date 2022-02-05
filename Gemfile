@@ -31,7 +31,6 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'dotenv-rails'
 
 group :development, :test do
-  gem 'better_errors'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'pry-rails'

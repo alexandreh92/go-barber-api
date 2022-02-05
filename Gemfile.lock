@@ -47,10 +47,6 @@ GEM
     arel (9.0.0)
     ast (2.4.2)
     bcrypt (3.1.13)
-    better_errors (2.6.0)
-      coderay (>= 1.0.0)
-      erubi (>= 1.0.0)
-      rack (>= 0.9.0)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -348,7 +344,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  better_errors
   bootsnap (>= 1.1.0)
   byebug
   carrierwave (~> 2.0)

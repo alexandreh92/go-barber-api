@@ -17,6 +17,22 @@ RSpec.configure do |config|
   # swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
     'v1/swagger.yaml' => {
+      openapi: '3.0.1',
+      info: {
+        title: 'GoBarber API V1',
+        version: 'v1',
+        description: 'This is the documentation for GoBarberAPI'
+      },
+      servers: [
+        {
+          url: "http://localhost:#{ENV['RAILS_PORT'] || 3000}",
+          description: 'Development server'
+        },
+        {
+          url: (ENV['SWAGGER_PRODUCTION_URL']).to_s,
+          description: 'Production server (uses live data)'
+        }
+      ],
       components: {
         schemas: {
           new_appointment: {
@@ -63,23 +79,8 @@ RSpec.configure do |config|
             in: :header
           }
         }
-      },
-      openapi: '3.0.1',
-      info: {
-        title: 'API V1',
-        version: 'v1',
-        description: 'This is the first version of my API'
-      },
-      servers: [
-        {
-          url: 'http://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'localhost:3000'
-            }
-          }
-        }
-      ]
+      }
+
     }
   }
 
