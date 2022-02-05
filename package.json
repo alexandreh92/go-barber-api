@@ -1,15 +1,5 @@
 {
-  "name": "go-barber-web-rails",
-  "engines": {
-    "node": "13.8.0",
-    "yarn": "1.22.0"
-  },
-  "scripts": {
-    "build": "yarn --cwd client install && yarn --cwd client build",
-    "deploy": "cp -a client/build/. public/",
-    "postinstall": "yarn build && yarn deploy",
-    "commit": "git-cz"
-  },
+  "name": "go-barber-api",
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
