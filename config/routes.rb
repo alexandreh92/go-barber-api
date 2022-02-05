@@ -10,13 +10,13 @@ Rails.application.routes.draw do
     resources :profile, only: [:none] do
       put :update, on: :collection
     end
+    resources :schedule, only: [:index]
   end
 
   scope :api do
     resources :providers, on: :collection do
       get :availables
     end
-    resources :schedule, on: :collection
 
     devise_for :users, skip: :all
     as :user do

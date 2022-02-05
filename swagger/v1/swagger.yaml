@@ -198,6 +198,22 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/user_registration"
+  "/api/schedule":
+    get:
+      summary: List all schedule given a day
+      tags:
+      - Schedule
+      security:
+      - Bearer: []
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
   "/api/sessions":
     post:
       summary: Creates a session
