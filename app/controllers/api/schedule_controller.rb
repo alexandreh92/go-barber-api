@@ -3,7 +3,7 @@
 module Api
   class ScheduleController < ApplicationController
     def index
-      date = DateTime.parse(params[:date])
+      date = DateTime.parse(schedule_params[:date])
       appointments = Appointment.not_cancelled.where(
         provider_id: current_user.id,
         date: date.beginning_of_day..date.end_of_day

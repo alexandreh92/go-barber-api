@@ -2,8 +2,6 @@
 
 module Api
   class RegistrationsController < ApiAuthController
-    skip_before_action :authenticate_user!, only: [:create]
-
     def create
       user = User.new(sign_up_params)
       user.save!

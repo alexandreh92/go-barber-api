@@ -2,8 +2,6 @@
 
 module Api
   class SessionsController < ApiAuthController
-    skip_before_action :authenticate_user!, only: [:create]
-
     def create
       @user = User.find_by_email!(session_params[:email])
 
@@ -21,10 +19,6 @@ module Api
 
       def valid_password?
         @user.valid_password?(session_params[:password])
-      end
-
-      def respond_to_on_destroy
-        head :no_content
       end
 
       def session_params
