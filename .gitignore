@@ -41,3 +41,5 @@ erd.pdf
 
 # DotEnv file
 *.env
+
+*.DS_Store
