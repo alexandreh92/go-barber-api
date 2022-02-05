@@ -31,13 +31,33 @@ RSpec.describe 'api/sessions', type: :request do
         end
 
         context 'with failure' do
-          response '401', 'unauthorized' do
-            let(:params) { { email: user.email, password: 'no-password' } }
+          before do |example|
+            submit_request(example.metadata)
+          end
 
-            run_test! do |response|
-              expect(response.body).to eq(
-                'You need to sign in or sign up before continuing.'
-              )
+          response '401', 'unauthorized' do
+            context 'when password is invalid' do
+              let(:params) { { email: user.email, password: 'no-password' } }
+
+              it 'returns invalid credentials error' do
+                expect(response.body).to include_json(
+                  {
+                    error: /Invalid credentials/
+                  }
+                )
+              end
+            end
+
+            context 'when email is invalid or record not exist' do
+              let(:params) { { email: 'no-email@foo.bar', password: password } }
+
+              it 'returns invalid credentials error' do
+                expect(response.body).to include_json(
+                  {
+                    error: /Invalid credentials/
+                  }
+                )
+              end
             end
           end
         end

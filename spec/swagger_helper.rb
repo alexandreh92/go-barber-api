@@ -43,6 +43,16 @@ RSpec.configure do |config|
               email: { type: 'string', required: true },
               password: { type: 'string', required: true }
             }
+          },
+          user_registration: {
+            type: 'object',
+            properties: {
+              email: { type: 'string', required: true },
+              password: { type: 'string', required: true },
+              password_confirmation: { type: 'string', required: true },
+              name: { type: 'string', required: true },
+              provider: { type: 'boolean', required: true }
+            }
           }
         },
         securitySchemes: {

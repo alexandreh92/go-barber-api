@@ -26,6 +26,33 @@ components:
           type: string
         avatar:
           type: file
+    user_session:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+        password:
+          type: string
+          required: true
+    user_registration:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+        password:
+          type: string
+          required: true
+        password_confirmation:
+          type: string
+          required: true
+        name:
+          type: string
+          required: true
+        provider:
+          type: boolean
+          required: true
   securitySchemes:
     Bearer:
       description: JWT key necessary to use API calls
@@ -145,8 +172,48 @@ paths:
           description: successful
         '401':
           description: unauthorized
+        '422':
+          description: unprocessable entity
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
+              "$ref": "#/components/schemas/update_profile"
+  "/api/registrations":
+    post:
+      summary: Creates an user
+      tags:
+      - Registration
+      parameters: []
+      responses:
+        '201':
+          description: created
+          headers:
+            Authorization:
               type: string
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/user_registration"
+  "/api/sessions":
+    post:
+      summary: Creates a session
+      tags:
+      - Session
+      parameters: []
+      responses:
+        '201':
+          description: created
+          headers:
+            Authorization:
+              type: string
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/user_session"

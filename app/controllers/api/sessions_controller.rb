@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 module Api
-  class SessionsController < Devise::SessionsController
-    respond_to :json
+  class SessionsController < ApiAuthController
+    skip_before_action :authenticate_user!, only: [:create]
 
     def create
       @user = User.find_by_email!(session_params[:email])
 
       unless valid_password?
-        render json: {
-          message: 'Invalid credentials'
+        return render json: {
+          error: 'Invalid credentials'
         }, status: :unauthorized
       end
 
