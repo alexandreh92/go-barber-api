@@ -28,6 +28,7 @@ gem 'rswag-ui'
 gem 'sentry-raven'
 gem 'slim-rails'
 gem 'will_paginate', '~> 3.1.0'
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'better_errors'

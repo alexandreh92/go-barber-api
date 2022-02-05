@@ -18,21 +18,10 @@ Rails.application.routes.draw do
     end
     resources :schedule, on: :collection
 
-    devise_for :users,
-               path: '',
-               path_names: {
-                 sign_in: 'sessions',
-                 sign_out: 'logout'
-               },
-               controllers: {
-                 sessions: 'sessions'
-               }
-    devise_scope :user do
-      post '/registrations', to: 'registrations#create'
+    devise_for :users, skip: :all
+    as :user do
+      post :sessions, to: 'api/sessions#create', as: :user_session
+      post :registrations, to: 'api/registrations#create', as: :user_registration
     end
   end
-
-  get '*path', to: 'application#fallback_index_html', constraints: lambda { |request|
-    !request.xhr? && request.format.html?
-  }
 end

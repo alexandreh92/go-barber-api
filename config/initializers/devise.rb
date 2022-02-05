@@ -6,11 +6,10 @@ Devise.setup do |config|
   # JWT CONFIGURATION
 
   config.jwt do |jwt|
-    # YOU SHOULD RUN 'rake secret' TO GENERATE A NEW KEY, AND REMOVE IT FROM PROJECT
-    # ENV['DEVISE_JWT_SECRET_KEY']
-    jwt.secret = 'f2d29da48bfc3ee3286e49476aa009fbbdc6d9428bca1dc9d7e7eedce78e93f4c647a6260101115d06d9c6e7c37d7480301ec5a8df9fc77ade0a9afb731acba0'
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}]
+      ['POST', %r{^/api/sessions$}],
+      ['POST', %r{^/api/registrations$}]
     ]
     jwt.revocation_requests = [
       ['DELETE', %r{^/logout$}]

@@ -36,6 +36,13 @@ RSpec.configure do |config|
               current_password: { type: 'string' },
               avatar: { type: 'file' }
             }
+          },
+          user_session: {
+            type: 'object',
+            properties: {
+              email: { type: 'string', required: true },
+              password: { type: 'string', required: true }
+            }
           }
         },
         securitySchemes: {

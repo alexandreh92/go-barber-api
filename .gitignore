@@ -38,3 +38,6 @@ erd.pdf
 
 # Coverage files
 /coverage
+
+# DotEnv file
+*.env
