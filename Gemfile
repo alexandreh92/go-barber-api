@@ -3,14 +3,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.7.5'
 
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'jbuilder', '~> 2.5'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.4'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
 
 gem 'carrierwave', '~> 2.0'
 gem 'devise', '~> 4.7.1'
@@ -18,15 +16,12 @@ gem 'devise-jwt'
 gem 'dry-configurable', '0.9.0'
 gem 'faker', '~> 2.10.2'
 gem 'fog-aws'
-gem 'foreman', '~> 0.87'
 gem 'mimemagic'
 gem 'mini_magick'
 gem 'pg', '~> 1.2'
 gem 'rack-cors'
 gem 'rswag-api'
 gem 'rswag-ui'
-gem 'sentry-raven'
-gem 'slim-rails'
 gem 'will_paginate', '~> 3.1.0'
 gem 'dotenv-rails'
 
