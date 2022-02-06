@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class ApiAuthController < ApiController
     skip_before_action :authenticate_user!
