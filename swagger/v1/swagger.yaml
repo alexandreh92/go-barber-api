@@ -1,4 +1,14 @@
 ---
+openapi: 3.0.1
+info:
+  title: GoBarber API V1
+  version: v1
+  description: This is the documentation for GoBarberAPI
+servers:
+- url: http://localhost:3000
+  description: Development server
+- url: ''
+  description: Production server (uses live data)
 components:
   schemas:
     new_appointment:
@@ -6,7 +16,6 @@ components:
       properties:
         date:
           type: string
-          format: date-time
         provider_id:
           type: integer
           example: 1
@@ -25,50 +34,42 @@ components:
         current_password:
           type: string
         avatar:
-          type: file
+          type: string
     user_session:
       type: object
       properties:
         email:
           type: string
-          required: true
         password:
           type: string
-          required: true
+      required:
+      - email
+      - password
     user_registration:
       type: object
       properties:
         email:
           type: string
-          required: true
         password:
           type: string
-          required: true
         password_confirmation:
           type: string
-          required: true
         name:
           type: string
-          required: true
         provider:
           type: boolean
-          required: true
+      required:
+      - email
+      - password
+      - password_confirmation
+      - name
+      - provider
   securitySchemes:
     Bearer:
       description: JWT key necessary to use API calls
       type: apiKey
       name: Authorization
       in: header
-openapi: 3.0.1
-info:
-  title: API V1
-  version: v1
-  description: This is the first version of my API
-servers:
-- url: http://{defaultHost}
-  variables:
-    defaultHost:
-      default: localhost:3000
 paths:
   "/api/appointments":
     get:
@@ -179,6 +180,37 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/update_profile"
+  "/api/providers":
+    get:
+      summary: List all providers
+      tags:
+      - Providers
+      security:
+      - Bearer: []
+      responses:
+        '200':
+          description: successful
+  "/api/providers/availables":
+    get:
+      summary: List all available dates
+      tags:
+      - Providers
+      security:
+      - Bearer: []
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: provider_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
   "/api/registrations":
     post:
       summary: Creates an user
@@ -190,7 +222,8 @@ paths:
           description: created
           headers:
             Authorization:
-              type: string
+              schema:
+                type: string
         '422':
           description: unprocessable entity
       requestBody:
@@ -225,7 +258,8 @@ paths:
           description: created
           headers:
             Authorization:
-              type: string
+              schema:
+                type: string
         '401':
           description: unauthorized
       requestBody:

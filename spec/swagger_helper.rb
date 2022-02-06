@@ -6,7 +6,7 @@ RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
-  config.swagger_root = Rails.root.join('public', 'swagger').to_s
+  config.swagger_root = Rails.root.join('swagger').to_s
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
@@ -17,12 +17,28 @@ RSpec.configure do |config|
   # swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
     'v1/swagger.yaml' => {
+      openapi: '3.0.1',
+      info: {
+        title: 'GoBarber API V1',
+        version: 'v1',
+        description: 'This is the documentation for GoBarberAPI'
+      },
+      servers: [
+        {
+          url: "http://localhost:#{ENV['RAILS_PORT'] || 3000}",
+          description: 'Development server'
+        },
+        {
+          url: (ENV['SWAGGER_PRODUCTION_URL']).to_s,
+          description: 'Production server (uses live data)'
+        }
+      ],
       components: {
         schemas: {
           new_appointment: {
             type: 'object',
             properties: {
-              date: { type: 'string', format: 'date-time' },
+              date: { type: 'string' },
               provider_id: { type: 'integer', example: 1 }
             },
             required: %w[date provider_id]
@@ -34,25 +50,27 @@ RSpec.configure do |config|
               password: { type: 'string' },
               password_confirmation: { type: 'string' },
               current_password: { type: 'string' },
-              avatar: { type: 'file' }
+              avatar: { type: 'string' }
             }
           },
           user_session: {
             type: 'object',
             properties: {
-              email: { type: 'string', required: true },
-              password: { type: 'string', required: true }
-            }
+              email: { type: 'string' },
+              password: { type: 'string' }
+            },
+            required: %w[email password]
           },
           user_registration: {
             type: 'object',
             properties: {
-              email: { type: 'string', required: true },
-              password: { type: 'string', required: true },
-              password_confirmation: { type: 'string', required: true },
-              name: { type: 'string', required: true },
-              provider: { type: 'boolean', required: true }
-            }
+              email: { type: 'string' },
+              password: { type: 'string' },
+              password_confirmation: { type: 'string' },
+              name: { type: 'string' },
+              provider: { type: 'boolean' }
+            },
+            required: %w[email password password_confirmation name provider]
           }
         },
         securitySchemes: {
@@ -63,23 +81,8 @@ RSpec.configure do |config|
             in: :header
           }
         }
-      },
-      openapi: '3.0.1',
-      info: {
-        title: 'API V1',
-        version: 'v1',
-        description: 'This is the first version of my API'
-      },
-      servers: [
-        {
-          url: 'http://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'localhost:3000'
-            }
-          }
-        }
-      ]
+      }
+
     }
   }
 

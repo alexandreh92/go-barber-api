@@ -16,7 +16,7 @@ RSpec.describe 'api/sessions', type: :request do
 
         context 'with success' do
           response '201', 'created' do
-            header :Authorization, type: :string
+            header :Authorization, schema: { type: 'string' }
 
             let(:params) { { email: user.email, password: password } }
 

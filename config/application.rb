@@ -24,8 +24,8 @@ module GoBarberWebRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
-    config.middleware.delete ActionDispatch::Cookies
-    config.middleware.delete ActionDispatch::Session::CookieStore
+    config.api_only = true
+    config.debug_exception_response_format = :api
 
     config.filter_parameters << :password
 
